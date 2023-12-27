@@ -1,0 +1,24 @@
+.beer-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  header {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .brewery-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .brewery-info div {
+    margin-bottom: 10px;
+  }
+  
+  .brewery-type {
+    font-weight: bold;
+  }
+  
+  

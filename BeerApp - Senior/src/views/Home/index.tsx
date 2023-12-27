@@ -1,58 +1,37 @@
-import { useEffect, useState } from 'react';
-import { fetchData } from './utils';
-import { Beer } from '../../types';
-import { Link as RouterLink } from 'react-router-dom';
-import { Button, Checkbox, Paper, TextField, Link } from '@mui/material';
-import styles from './Home.module.css';
+import { useEffect, useState } from "react";
+import { useFavourites } from "../../contexts/FavouritesContext";
+import { fetchData } from "./utils";
+import { Beer } from "../../types";
+import { Link as RouterLink } from "react-router-dom";
+import { Button, Checkbox, Paper, TextField, Link } from "@mui/material";
+import styles from "./Home.module.css";
+import GradeIcon from "@mui/icons-material/Grade";
 
 const Home = () => {
   const [beerList, setBeerList] = useState<Array<Beer>>([]);
-  const [savedList, setSavedList] = useState<Array<Beer>>([]);
-
-  // eslint-disable-next-line
+  const { favouritesList } = useFavourites();
+// eslint-disable-next-line
   useEffect(fetchData.bind(this, setBeerList), []);
-
+  console.log(beerList)
   return (
     <article>
       <section>
         <main>
-          <Paper>
+        <Paper>
             <div className={styles.listContainer}>
               <div className={styles.listHeader}>
-                <TextField label='Filter...' variant='outlined' />
-                <Button variant='contained'>Reload list</Button>
+                <h3>Favourite items</h3>
               </div>
               <ul className={styles.list}>
-                {beerList.map((beer, index) => (
+                {favouritesList.map((beer, index) => (
                   <li key={index.toString()}>
-                    <Checkbox />
+                    <GradeIcon />
                     <Link component={RouterLink} to={`/beer/${beer.id}`}>
                       {beer.name}
                     </Link>
                   </li>
                 ))}
-              </ul>
-            </div>
-          </Paper>
-
-          <Paper>
-            <div className={styles.listContainer}>
-              <div className={styles.listHeader}>
-                <h3>Saved items</h3>
-                <Button variant='contained' size='small'>
-                  Remove all items
-                </Button>
-              </div>
-              <ul className={styles.list}>
-                {savedList.map((beer, index) => (
-                  <li key={index.toString()}>
-                    <Checkbox />
-                    <Link component={RouterLink} to={`/beer/${beer.id}`}>
-                      {beer.name}
-                    </Link>
-                  </li>
-                ))}
-                {!savedList.length && <p>No saved items</p>}
+                {!favouritesList.length && <p>No Favourite items</p>}
               </ul>
             </div>
           </Paper>
